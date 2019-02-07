@@ -1,0 +1,158 @@
+#+TITLE: Emacs Configuration
+#+AUTHOR: Eric Haberstroh
+#+EMAIL: gpg@erixpage.de
+#+STARTUP: indent
+
+* Introduction
+This is the [[https://www.gnu.org/software/emacs/][GNU Emacs]] configuration file of Eric Haberstroh
+<[[mailto:gpg@erixpage.de][gpg@erixpage.de]]>.
+
+The entire configuration lives within this [[https://orgmode.org/][Org mode]] file.  On startup,
+the following =init.el= file will load the Org library, extract all
+Emacs Lisp source code blocks from this file and execute them:
+
+#+BEGIN_SRC emacs-lisp :tangle no
+  (require 'org)
+  (org-babel-load-file (concat user-emacs-directory "config.org"))
+#+END_SRC
+
+You can find the source code of this configuration as well as its
+project history on [[https://github.com/pille1842/dotemacs/][GitHub]].  A readable HTML version is stored on
+[[http://www.erixpage.de/dotemacs/][Erixpage.de]].
+
+This configuration has been tested with GNU Emacs version 26.1 on a
+64-bit Ubuntu MATE 18.04 system.  Emacs has been compiled with the
+following commands:
+
+#+BEGIN_SRC shell-script
+  ./configure --with-mailutils --with-xwidgets
+  make
+  sudo make install
+#+END_SRC
+
+Most of the compilation requirements can be installed as dependencies
+for building Emacs 25.  Some additional libraries and programs have
+been installed.  The following commands should suffice to make
+compilation of Emacs possible:
+
+#+BEGIN_SRC shell-script
+  sudo apt-get build-dep emacs25
+  sudo apt install libwebkit2gtk-4.0-dev libgtk-3-dev libsystemd-dev mailutils
+#+END_SRC
+
+In the following sections of this document, a variety of configuration
+settings are made that fit my personal taste.  While it is certainly
+possible to use this configuration in its whole, I would encourage you
+to instead pick the parts of it that fit your personal style.
+
+Questions and comments are welcome at [[mailto:gpg@erixpage.de][gpg@erixpage.de]] or the [[https://github.com/pille1842/dotemacs/issues/][GitHub
+issue tracker]].
+
+* License
+This entire configuration file is licensed under a [[http://creativecommons.org/licenses/by/4.0/][Creative Commons
+Attribution 4.0 International]] license (CC BY 4.0).  See that page for
+more information about your rights.
+
+[[https://i.creativecommons.org/l/by/4.0/88x31.png]]
+
+* Disable the customization system
+I do not wish to use Emacs' built-in customization interface.  I would
+also like to keep my init file clean from its ugly insertions.
+Therefore let's define a custom file and then proceed to ignore it
+forever.
+
+#+BEGIN_SRC emacs-lisp
+  (setq custom-file (concat user-emacs-directory "custom.el"))
+#+END_SRC
+
+* Package system
+This configuration relies on the [[https://github.com/jwiegley/use-package][use-package]] macro.  In order for the
+configuration to be portable, use-package will be installed if it is
+not already present.  So first, let's initialize the package system,
+including the [[https://melpa.org/][MELPA]] package archive.  Then let's check if use-package
+is installed and install it if necessary.
+
+#+BEGIN_SRC emacs-lisp
+  (require 'package)
+
+  (let* ((no-ssl (and (memq system-type '(windows-nt ms-dos))
+                      (not (gnutls-available-p))))
+         (proto (if no-ssl "http" "https")))
+    (when no-ssl
+      (warn "\
+  Your version of Emacs does not support SSL connections,
+  which is unsafe because it allows man-in-the-middle attacks.
+  There are two things you can do about this warning:
+  1. Install an Emacs version that does support SSL and be safe.
+  2. Remove this warning from your init file so you won't see it again."))
+    ;; Comment/uncomment these two lines to enable/disable MELPA and MELPA Stable as desired
+    (add-to-list 'package-archives (cons "melpa" (concat proto "://melpa.org/packages/")) t)
+    ;;(add-to-list 'package-archives (cons "melpa-stable" (concat proto "://stable.melpa.org/packages/")) t)
+    (when (< emacs-major-version 24)
+      ;; For important compatibility libraries like cl-lib
+      (add-to-list 'package-archives (cons "gnu" (concat proto "://elpa.gnu.org/packages/")))))
+  (package-initialize)
+
+  (unless (package-installed-p 'use-package)
+    (package-refresh-contents)
+    (package-install 'use-package))
+#+END_SRC
+
+Now let's load use-package.
+
+#+BEGIN_SRC emacs-lisp
+  (eval-when-compile
+    (require 'use-package))
+#+END_SRC
+
+Similarly to what we did above with use-package itself, use-package
+can ensure that any packages we select in this configuration will be
+installed if they are not already present on the local system.  This
+can either be done for each package separately via the =:ensure t=
+option, or it can be enabled for all packages, which is what I prefer.
+
+#+BEGIN_SRC emacs-lisp
+  (setq use-package-always-ensure t)
+#+END_SRC
+
+* Interface
+** Disable tool-bar and scroll-bar
+Disable the ugly tool-bar at the top and the unnecessary scroll-bar at
+the right edge of the frame.  While I seldomly use the menu-bar, it
+can still be useful sometimes.
+
+#+BEGIN_SRC emacs-lisp
+  (tool-bar-mode -1)
+  (scroll-bar-mode -1)
+#+END_SRC
+
+* Source control
+** Magit
+[[https://magit.vc/][Magit]] is an interface to the version control system [[https://git-scm.com/][Git]], implemented
+as an Emacs package.
+
+The [[https://magit.vc/manual/magit.html][user manual]] recommends setting up some keybindings and enabling a
+global minor mode with some bindings for all file-visiting buffers.
+
+#+BEGIN_SRC emacs-lisp
+  (use-package magit
+    :bind (("C-x g"   . magit-status)
+           ("C-x M-g" . magit-dispatch-popup))
+    :config
+    (global-magit-file-mode t))
+#+END_SRC
+
+* Load a private configuration file
+Some settings may need to reside in a private file that is kept
+outside source control.  The constant =private-file= is defined to
+contain the path to such a file.  If it exists, it will be loaded at
+the end of the startup process.
+
+#+BEGIN_SRC emacs-lisp
+  (defconst private-file (concat user-emacs-directory "private.el")
+    "A private initialization file that is kept outside of source
+    control and is loaded at the very end of the startup process.")
+
+  (when (file-readable-p private-file)
+    (load-file private-file))
+#+END_SRC
