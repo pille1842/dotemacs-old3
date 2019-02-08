@@ -116,6 +116,13 @@ option, or it can be enabled for all packages, which is what I prefer.
 #+END_SRC
 
 * Interface
+** Change frame title
+I usually only use one Emacs frame.  The title of that frame should therefore just be "Emacs".
+
+#+BEGIN_SRC emacs-lisp
+  (setq frame-title-format "Emacs")
+#+END_SRC
+
 ** Disable tool-bar and scroll-bar
 Disable the ugly tool-bar at the top and the unnecessary scroll-bar at
 the right edge of the frame.  While I seldomly use the menu-bar, it
@@ -125,6 +132,7 @@ can still be useful sometimes.
   (tool-bar-mode -1)
   (scroll-bar-mode -1)
 #+END_SRC
+
 ** Inhibit splash screen and set initial scratch message
 By default, Emacs shows a welcome screen on startup.  I would prefer
 to see the scratch buffer instead.  A welcoming message can be
