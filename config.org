@@ -125,6 +125,20 @@ can still be useful sometimes.
   (tool-bar-mode -1)
   (scroll-bar-mode -1)
 #+END_SRC
+** Inhibit splash screen and set initial scratch message
+By default, Emacs shows a welcome screen on startup.  I would prefer
+to see the scratch buffer instead.  A welcoming message can be
+displayed there instead.
+
+#+BEGIN_SRC emacs-lisp
+  (setq inhibit-splash-screen t
+        initial-scratch-message
+        (concat ";; Welcome to Emacs "
+                emacs-version
+                " on "
+                (system-name)
+                ".\n\n"))
+#+END_SRC
 
 * Source control
 ** Magit
