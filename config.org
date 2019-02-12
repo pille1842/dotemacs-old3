@@ -117,7 +117,8 @@ option, or it can be enabled for all packages, which is what I prefer.
 
 * Interface
 ** Change frame title
-I usually only use one Emacs frame.  The title of that frame should therefore just be "Emacs".
+I usually only use one Emacs frame.  The title of that frame should
+therefore just be "Emacs".
 
 #+BEGIN_SRC emacs-lisp
   (setq frame-title-format "Emacs")
