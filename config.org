@@ -174,6 +174,19 @@ modeline.  I much prefer to see which column I'm in, too.
   (column-number-mode t)
 #+END_SRC
 
+** Helm
+[[https://emacs-helm.github.io/helm/][Helm]], in its own words, "is an Emacs framework for incremental
+completions and narrowing selections."
+
+#+BEGIN_SRC emacs-lisp
+  (use-package helm
+    :bind (("M-x"     . helm-M-x)
+           ("C-x C-f" . helm-find-files))
+    :config
+    (require 'helm-config)
+    (helm-mode t))
+#+END_SRC
+
 * Source control
 ** Magit
 [[https://magit.vc/][Magit]] is an interface to the version control system [[https://git-scm.com/][Git]], implemented
