@@ -148,6 +148,31 @@ displayed there instead.
                 ".\n\n"))
 #+END_SRC
 
+** Theme and font
+By default, Emacs uses the Ubuntu font family on my system.  I prefer
+[[https://github.com/adobe-fonts/source-code-pro][Source Code Pro]], a free Adobe font.
+
+#+BEGIN_SRC emacs-lisp
+  (add-to-list 'default-frame-alist '(font . "Source Code Pro 12"))
+#+END_SRC
+
+The default theme is a little too bright for my taste.  Let's use
+[[https://github.com/bbatsov/zenburn-emacs][Zenburn]] instead.
+
+#+BEGIN_SRC emacs-lisp
+  (use-package zenburn-theme
+    :config
+    (load-theme 'zenburn t))
+#+END_SRC
+
+** Show column number in modeline
+By default, Emacs only displays the current line number in the
+modeline.  I much prefer to see which column I'm in, too.
+
+#+BEGIN_SRC emacs-lisp
+  (column-number-mode t)
+#+END_SRC
+
 * Source control
 ** Magit
 [[https://magit.vc/][Magit]] is an interface to the version control system [[https://git-scm.com/][Git]], implemented
