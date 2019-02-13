@@ -274,7 +274,7 @@ Again, let's define a setup function.
           web-mode-css-indent-offset 4
           web-mode-code-indent-offset 4)
     (add-to-list 'auto-mode-alist
-                 '("\\.tpl\\'" . web-mode))
+                 '("\\.tpl\\'" . web-mode)))
 #+END_SRC
 
 Then let's pull in the package.
