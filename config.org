@@ -233,7 +233,17 @@ Since I will be using web-mode for non-PHP files including template
 files that contain PHP code, php-mode will not need to care about
 HTML.
 
+We'll also pull in [[https://github.com/xcwen/ac-php][ac-php]] for aggressive autocompletion.
+
 #+BEGIN_SRC emacs-lisp
+  (use-package ac-php
+    :config
+    (auto-complete-mode t)
+    (require 'ac-php)
+    (setq ac-sources '(ac-source-php))
+    (yas-global-mode t)
+    (ac-php-core-eldoc-setup))
+
   (defun eh/setup-php-mode ()
     "Set up indentation and other bits and pieces for PHP files."
     (setq indent-tabs-mode nil
