@@ -187,6 +187,15 @@ completions and narrowing selections."
     (helm-mode t))
 #+END_SRC
 
+* Editing
+** Electric pairs
+Why type parentheses yourself when there is [[https://www.emacswiki.org/emacs/ElectricPair][Electric Pair mode]]?  Let's
+enable it globally.
+
+#+BEGIN_SRC emacs-lisp
+  (electric-pair-mode t)
+#+END_SRC
+
 * Source control
 ** Magit
 [[https://magit.vc/][Magit]] is an interface to the version control system [[https://git-scm.com/][Git]], implemented
