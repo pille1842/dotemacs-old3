@@ -196,6 +196,14 @@ enable it globally.
   (electric-pair-mode t)
 #+END_SRC
 
+** Highlight matching parens
+Especially in Lisp code, finding the right balance of parentheses is
+key.  This mode helps.
+
+#+BEGIN_SRC emacs-lisp
+  (show-paren-mode t)
+#+END_SRC
+
 * Source control
 ** Magit
 [[https://magit.vc/][Magit]] is an interface to the version control system [[https://git-scm.com/][Git]], implemented
