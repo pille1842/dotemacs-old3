@@ -203,6 +203,61 @@ global minor mode with some bindings for all file-visiting buffers.
     (global-magit-file-mode t))
 #+END_SRC
 
+* Programming
+The following subsections set up Emacs to support a variety of
+programming languages and related file formats which I use.
+
+** PHP
+The following setup is largely based on [[http://www.blogbyben.com/2016/08/emacs-php-modern-and-far-more-complete.html][this blog post]] by Ben Simon.
+
+First, let's define a function to set up a reasonable environment for
+PHP coding, including indentation with four spaces (and no TABs!).
+Since I will be using web-mode for non-PHP files including template
+files that contain PHP code, php-mode will not need to care about
+HTML.
+
+#+BEGIN_SRC emacs-lisp
+  (defun eh/setup-php-mode ()
+    "Set up indentation and other bits and pieces for PHP files."
+    (setq indent-tabs-mode nil
+          c-basic-offset 4
+          php-template-compatibility nil)
+    (subword-mode t))
+#+END_SRC
+
+Then, let's install [[https://github.com/emacs-php/php-mode][php-mode]].
+
+#+BEGIN_SRC emacs-lisp
+  (use-package php-mode
+    :config
+    (require 'php-ext)
+    (add-hook 'php-mode-hook 'eh/setup-php-mode))
+#+END_SRC
+
+Templates, CSS files and other related web files will be excellently
+handled by [[http://web-mode.org/][web-mode]].
+
+Again, let's define a setup function.
+
+#+BEGIN_SRC emacs-lisp
+  (defun eh/setup-web-mode ()
+    "Set up indentation and other bits and pieces for web-mode."
+    (setq indent-tabs-mode nil
+          web-mode-markup-indent-offset 4
+          web-mode-css-indent-offset 4
+          web-mode-code-indent-offset 4)
+    (add-to-list 'auto-mode-alist
+                 '("\\.tpl\\'" . web-mode))
+#+END_SRC
+
+Then let's pull in the package.
+
+#+BEGIN_SRC emacs-lisp
+  (use-package web-mode
+    :config
+    (add-hook 'web-mode-hook 'eh/setup-web-mode))
+#+END_SRC
+
 * Load a private configuration file
 Some settings may need to reside in a private file that is kept
 outside source control.  The constant =private-file= is defined to
