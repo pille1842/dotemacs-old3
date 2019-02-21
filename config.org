@@ -202,6 +202,15 @@ completions and narrowing selections."
     (helm-mode t))
 #+END_SRC
 
+** Yes or No questions
+Don't bother me to type in "yes" or "no" when a simple "y" or "n"
+should suffice.  These aren't all that close on the keyboard, after
+all.
+
+#+BEGIN_SRC emacs-lisp
+  (fset 'yes-or-no-p 'y-or-n-p)
+#+END_SRC
+
 * Editing
 ** Electric pairs
 Why type parentheses yourself when there is [[https://www.emacswiki.org/emacs/ElectricPair][Electric Pair mode]]?  Let's
