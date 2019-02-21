@@ -115,6 +115,21 @@ option, or it can be enabled for all packages, which is what I prefer.
   (setq use-package-always-ensure t)
 #+END_SRC
 
+* Backups
+Instead of cluttering the file system with backup files ending in =~=,
+I prefer Emacs to save all backups in a central directory.  The
+following settings, taking directly from [[https://www.emacswiki.org/emacs/BackupDirectory][EmacsWiki]], accomplishes that.
+
+#+BEGIN_SRC emacs-lisp
+  (setq backup-by-copying t
+        backup-directory-alist
+        '(("." . "~/.emacs.d/backup/"))
+        delete-old-versions t
+        kept-new-versions 6
+        kept-old-versions 2
+        version-control t)
+#+END_SRC
+
 * Interface
 ** Change frame title
 I usually only use one Emacs frame.  The title of that frame should
