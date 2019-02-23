@@ -8,13 +8,11 @@ This is the [[https://www.gnu.org/software/emacs/][GNU Emacs]] configuration fil
 <[[mailto:gpg@erixpage.de][gpg@erixpage.de]]>.
 
 The entire configuration lives within this [[https://orgmode.org/][Org mode]] file.  On startup,
-the following =init.el= file will load the Org library, extract all
-Emacs Lisp source code blocks from this file and execute them:
-
-#+BEGIN_SRC emacs-lisp :tangle no
-  (require 'org)
-  (org-babel-load-file (concat user-emacs-directory "config.org"))
-#+END_SRC
+the actual init file (=init.el=) will initialize the package system
+and the use-package macro, then extract all the source code blocks
+from this file and execute them (i.e. load the rest of the
+configuration).  Have a look at =init.el= to see what's happening
+there.
 
 You can find the source code of this configuration as well as its
 project history on [[https://github.com/pille1842/dotemacs/][GitHub]].  A readable HTML version is stored on
@@ -63,56 +61,6 @@ forever.
 
 #+BEGIN_SRC emacs-lisp
   (setq custom-file (concat user-emacs-directory "custom.el"))
-#+END_SRC
-
-* Package system
-This configuration relies on the [[https://github.com/jwiegley/use-package][use-package]] macro.  In order for the
-configuration to be portable, use-package will be installed if it is
-not already present.  So first, let's initialize the package system,
-including the [[https://melpa.org/][MELPA]] package archive.  Then let's check if use-package
-is installed and install it if necessary.
-
-#+BEGIN_SRC emacs-lisp
-  (require 'package)
-
-  (let* ((no-ssl (and (memq system-type '(windows-nt ms-dos))
-                      (not (gnutls-available-p))))
-         (proto (if no-ssl "http" "https")))
-    (when no-ssl
-      (warn "\
-  Your version of Emacs does not support SSL connections,
-  which is unsafe because it allows man-in-the-middle attacks.
-  There are two things you can do about this warning:
-  1. Install an Emacs version that does support SSL and be safe.
-  2. Remove this warning from your init file so you won't see it again."))
-    ;; Comment/uncomment these two lines to enable/disable MELPA and MELPA Stable as desired
-    (add-to-list 'package-archives (cons "melpa" (concat proto "://melpa.org/packages/")) t)
-    ;;(add-to-list 'package-archives (cons "melpa-stable" (concat proto "://stable.melpa.org/packages/")) t)
-    (when (< emacs-major-version 24)
-      ;; For important compatibility libraries like cl-lib
-      (add-to-list 'package-archives (cons "gnu" (concat proto "://elpa.gnu.org/packages/")))))
-  (package-initialize)
-
-  (unless (package-installed-p 'use-package)
-    (package-refresh-contents)
-    (package-install 'use-package))
-#+END_SRC
-
-Now let's load use-package.
-
-#+BEGIN_SRC emacs-lisp
-  (eval-when-compile
-    (require 'use-package))
-#+END_SRC
-
-Similarly to what we did above with use-package itself, use-package
-can ensure that any packages we select in this configuration will be
-installed if they are not already present on the local system.  This
-can either be done for each package separately via the =:ensure t=
-option, or it can be enabled for all packages, which is what I prefer.
-
-#+BEGIN_SRC emacs-lisp
-  (setq use-package-always-ensure t)
 #+END_SRC
 
 * Backups
@@ -242,6 +190,57 @@ global minor mode with some bindings for all file-visiting buffers.
            ("C-x M-g" . magit-dispatch-popup))
     :config
     (global-magit-file-mode t))
+#+END_SRC
+
+* Org mode
+[[https://orgmode.org/][Org mode]] is for keeping notes, maintaining TODO lists, planning
+projects, and authoring documents with a fast and effective plain-text
+system.
+
+In fact, this whole Emacs configuration file is written in Org mode,
+because it enables extracting source code blocks from files.  The
+extensive documentation of what a particular setting achieves is thus
+never far from the actual code, plus you can collapse sections and
+organize your settings in a far more structured way.  In short, I love
+it.
+
+After we have already added the Org ELPA in the [[*Package system][Package system]]
+section, we can now install the =org-plus-contrib= package, which
+contains the actual Org package as well as some additional goodies.
+This does also have the advantage of giving us the latest version of
+Org mode as compared to the one that comes packaged with Emacs.
+
+The [[https://orgmode.org/manual/Activation.html#Activation][manual]] also recommends setting up certain keybindings, so let's
+get that done right at the beginning.
+
+#+BEGIN_SRC emacs-lisp
+  (use-package org
+    :ensure org-plus-contrib
+    :bind (("C-c l" . org-store-link)
+           ("C-c a" . org-agenda)
+           ("C-c c" . org-capture))
+    :config (require 'org))
+#+END_SRC
+
+The following function does some preliminary setup I wish to run when
+I enter an Org mode file -- namely to enable =auto-fill-mode=.
+
+#+BEGIN_SRC emacs-lisp
+  (defun eh/setup-org-mode ()
+    "Setup the editor for Org mode files."
+    (auto-fill-mode t))
+
+  (add-hook 'org-mode-hook 'eh/setup-org-mode)
+#+END_SRC
+
+** Agenda
+All of my Org mode files, at least those relevant for my agenda, live
+in =~/org/=.  So the list of agenda files should contain just this
+directory, as the [[https://orgmode.org/manual/Agenda-Files.html#Agenda-Files][manual]] recommends.
+
+#+BEGIN_SRC emacs-lisp
+  (setq org-agenda-files
+        (list (expand-file-name "~/org")))
 #+END_SRC
 
 * Programming
