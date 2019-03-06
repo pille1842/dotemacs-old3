@@ -97,10 +97,12 @@ can still be useful sometimes.
   (scroll-bar-mode -1)
 #+END_SRC
 
-** Inhibit splash screen and set initial scratch message
-By default, Emacs shows a welcome screen on startup.  I would prefer
-to see the scratch buffer instead.  A welcoming message can be
-displayed there instead.
+** Inhibit splash screen and show dashboard
+By default, Emacs shows a welcome screen on startup.  I prefer
+[[https://github.com/emacs-dashboard/emacs-dashboard][dashboard]] which shows some useful lists of files, bookmarks and
+projects.  First, let's disable the splash screen and set a nicer
+message for the scratch buffer (I already know what it's doing, no
+need to explain it to me).
 
 #+BEGIN_SRC emacs-lisp
   (setq inhibit-splash-screen t
@@ -110,6 +112,14 @@ displayed there instead.
                 " on "
                 (system-name)
                 ".\n\n"))
+#+END_SRC
+
+Then let's install dashboard.
+
+#+BEGIN_SRC emacs-lisp
+  (use-package dashboard
+    :config
+    (dashboard-setup-startup-hook))
 #+END_SRC
 
 ** Theme and font
