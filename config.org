@@ -222,6 +222,14 @@ get that done right at the beginning.
     :config (require 'org))
 #+END_SRC
 
+When hitting =RET= over a link, I rarely want to split that link into
+two lines.  Much more often I want to follow the link, so let's enable
+that behaviour.
+
+#+BEGIN_SRC emacs-lisp
+  (setq org-return-follows-link t)
+#+END_SRC
+
 The following function does some preliminary setup I wish to run when
 I enter an Org mode file -- namely to enable =auto-fill-mode=.
 
