@@ -192,6 +192,17 @@ global minor mode with some bindings for all file-visiting buffers.
     (global-magit-file-mode t))
 #+END_SRC
 
+* Project management
+[[https://github.com/bbatsov/projectile][Projectile]] is a project interaction library for Emacs. Its goal is to
+provide a nice set of features operating on a project level without
+introducing external dependencies.
+
+#+BEGIN_SRC emacs-lisp
+  (use-package projectile
+    :config
+    (projectile-mode t))
+#+END_SRC
+
 * Org mode
 [[https://orgmode.org/][Org mode]] is for keeping notes, maintaining TODO lists, planning
 projects, and authoring documents with a fast and effective plain-text
