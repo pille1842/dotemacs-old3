@@ -251,6 +251,39 @@ directory, as the [[https://orgmode.org/manual/Agenda-Files.html#Agenda-Files][m
         (list (expand-file-name "~/org")))
 #+END_SRC
 
+* RSS reader
+The [[https://github.com/skeeto/elfeed][Elfeed]] RSS reader is an excellent choice for keeping up with
+blogs, podcasts, comics, and news sources from within Emacs.  I use it
+together with [[https://github.com/remyhonig/elfeed-org][elfeed-org]].  The latter enables storing the RSS feeds
+I'd like to follow in an Org file.
+
+First, let's pull in Elfeed and elfeed-goodies.  This enables some
+enhancements of the Elfeed interface.  I would also like to store the
+feed database together with my other Org files.  Since these are
+synchronized between machines, I don't have to bother reading things
+twice.
+
+#+BEGIN_SRC emacs-lisp
+  (use-package elfeed
+    :bind (("C-x w" . elfeed))
+    :config
+    (setq elfeed-db-directory "~/org/elfeed"))
+
+  (use-package elfeed-goodies
+    :config
+    (elfeed-goodies/setup))
+#+END_SRC
+
+Then let's install elfeed-org and set it up to read a list of feeds
+from my =~/org/feeds.org= file.
+
+#+BEGIN_SRC emacs-lisp
+  (use-package elfeed-org
+    :config
+    (elfeed-org)
+    (setq rmh-elfeed-org-files (list "~/org/feeds.org")))
+#+END_SRC
+
 * Programming
 The following subsections set up Emacs to support a variety of
 programming languages and related file formats which I use.
