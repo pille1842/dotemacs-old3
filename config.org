@@ -202,6 +202,21 @@ global minor mode with some bindings for all file-visiting buffers.
     (global-magit-file-mode t))
 #+END_SRC
 
+* Remote connections
+I often need to work on files which are stored on another machine, be
+that via SSH or FTP connections.  Emacs has a built-in library called
+TRAMP which handles these connections.  You can also store a list of
+passwords for these machines in a file called =~/.authinfo.gpg=, thus
+sparing you the hassle of typing them in over and over (and also
+remembering them in the first place).  In order for this to work with
+the FTP method, two variables need to be set which point to the
+authinfo file.
+
+#+BEGIN_SRC emacs-lisp
+  (setq auth-sources "~/.authinfo.gpg"
+        ange-ftp-netrc-filename auth-sources)
+#+END_SRC
+
 * Project management
 [[https://github.com/bbatsov/projectile][Projectile]] is a project interaction library for Emacs. Its goal is to
 provide a nice set of features operating on a project level without
