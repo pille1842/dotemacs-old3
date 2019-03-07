@@ -5,7 +5,7 @@
 
 This repository contains my configuration files for GNU Emacs.
 
-[[https://github.com/pille1842/dotemacs/blob/master/screenshot.png][Screenshot]]
+[[https://github.com/pille1842/dotemacs/blob/master/screenshot.png]]
 
 ** Setup
 There are two files where the actual configuration takes place:
