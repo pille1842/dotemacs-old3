@@ -1,0 +1,58 @@
+#+TITLE: My Emacs configuration
+#+AUTHOR: Eric Haberstroh
+#+EMAIL: gpg@erixpage.de
+#+STARTUP: indent
+
+This repository contains my configuration files for GNU Emacs.
+
+** Setup
+There are two files where the actual configuration takes place:
+
+- [[https://github.com/pille1842/dotemacs/blob/master/init.el][init.el]] will be loaded by Emacs at startup.  It bootstraps the
+  packaging system, then loads the actual configuration from...
+- [[https://github.com/pille1842/dotemacs/blob/master/config.org][config.org]], where most configuration operations are performed.
+
+Refer to =config.org= for instructions on how to build Emacs in a
+manner compatible with this configuration.  It should reasonably work
+with any newer Emacs version, but has only been tested with GNU Emacs
+26.1 on Ubuntu MATE 18.04 systems.
+
+If you wish to use this configuration in its entirety, begin by making
+a backup of your existing configuration files if necessary:
+
+#+BEGIN_SRC shell-script
+cp ~/.emacs{,.bak}
+mv ~/.emacs.d{,.bak}
+#+END_SRC
+
+Then clone this repository:
+
+#+BEGIN_SRC shell-script
+git clone https://github.com/pille1842/dotemacs ~/.emacs.d
+#+END_SRC
+
+On first start, Emacs should automatically refresh its knowledge of
+the GNU ELPA, MELPA and Orgmode.org ELPA, then install a whole bunch
+of packages.  I would recommend restarting Emacs after the
+installation is finished.
+
+** The private file
+The repository is configured via =.gitignore= to only contain this
+README, the =.gitignore= itself, =init.el= and =config.org=.  This is
+to protect you from accidentally committing sensible information like
+your bookmarks, recently visited files or any other content you do not
+wish to share on public platforms.
+
+In particular, you might want to create a file called =private.el= in
+=~/.emacs.d=.  If this file exists, it will be loaded at the end of
+the configuration process.  You might want to put any personal
+information or settings which you do not wish to commit into the
+repository in this file.
+
+** License
+=init.el= and =config.org= contain licensing information.  This file
+itself is licensed under a [[http://creativecommons.org/licenses/by/4.0/][Creative Commons Attribution 4.0
+International]] license (CC BY 4.0).  See that page for more information
+about your rights.
+
+[[https://i.creativecommons.org/l/by/4.0/88x31.png]]

@@ -1,4 +1,5 @@
 *
+!.gitignore
+!README.org
 !config.org
 !init.el
-!.gitignore
