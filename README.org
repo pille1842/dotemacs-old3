@@ -19,6 +19,11 @@ manner compatible with this configuration.  It should reasonably work
 with any newer Emacs version, but has only been tested with GNU Emacs
 26.1 on Ubuntu MATE 18.04 systems.
 
+You may need to install the [[https://github.com/adobe-fonts/source-code-pro][Source Code Pro]] family of fonts on your
+system if you haven't done so already.  If you wish to use a different
+font, refer to the "Interface / Theme and font" section in
+=config.org= and put your choice there.
+
 If you wish to use this configuration in its entirety, begin by making
 a backup of your existing configuration files if necessary:
 
