@@ -63,6 +63,28 @@ forever.
   (setq custom-file (concat user-emacs-directory "custom.el"))
 #+END_SRC
 
+* Delight modes
+Since we'll be installing a lot of additional minor modes in the
+course of this configuration, the modeline can get quite
+overwhelming.  Many of the minor modes are active all the time, but I
+don't want to know about them; or their modeline strings might be
+unnecessarily long.
+
+[[https://www.emacswiki.org/emacs/DelightedModes][Delight]] can be used to hide or abbreviate these modeline strings.  It
+can also be used conveniently together with use-package.
+
+#+BEGIN_SRC emacs-lisp
+  (use-package delight)
+#+END_SRC
+
+Some modes are built right into Emacs, or they might come with
+packages that aren't installed explicitly but rather as dependencies.
+We can "delight" these right here at the beginning.
+
+#+BEGIN_SRC emacs-lisp
+  (delight '((auto-revert-mode nil autorevert)))
+#+END_SRC
+
 * Backups
 Instead of cluttering the file system with backup files ending in =~=,
 I prefer Emacs to save all backups in a central directory.  The
@@ -153,6 +175,7 @@ completions and narrowing selections."
 
 #+BEGIN_SRC emacs-lisp
   (use-package helm
+    :delight helm-mode
     :bind (("M-x"     . helm-M-x)
            ("C-x C-f" . helm-find-files))
     :config
@@ -170,6 +193,7 @@ space allows given your settings).
 
 #+BEGIN_SRC emacs-lisp
   (use-package which-key
+    :delight which-key-mode
     :config
     (which-key-mode))
 #+END_SRC
@@ -238,6 +262,7 @@ introducing external dependencies.
 
 #+BEGIN_SRC emacs-lisp
   (use-package projectile
+    :delight '(:eval (concat " " (projectile-project-name)))
     :config
     (projectile-mode t))
 #+END_SRC
