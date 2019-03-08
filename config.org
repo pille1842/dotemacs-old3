@@ -119,6 +119,13 @@ can still be useful sometimes.
   (scroll-bar-mode -1)
 #+END_SRC
 
+** Disable the bell
+I need neither noise nor flashy screen effects from Emacs.
+
+#+BEGIN_SRC emacs-lisp
+  (setq ring-bell-function 'ignore)
+#+END_SRC
+
 ** Inhibit splash screen and show dashboard
 By default, Emacs shows a welcome screen on startup.  I prefer
 [[https://github.com/emacs-dashboard/emacs-dashboard][dashboard]] which shows some useful lists of files, bookmarks and
