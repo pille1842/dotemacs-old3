@@ -333,6 +333,24 @@ directory, as the [[https://orgmode.org/manual/Agenda-Files.html#Agenda-Files][m
         (list (expand-file-name "~/org")))
 #+END_SRC
 
+** Linking to Thunderbird messages
+While there are email clients for Emacs and I have tried a few
+(particularly [[https://notmuchmail.org/][notmuch]]), I simply cannot live without Thunderbird.  In
+order to link to specific email messages in Thunderbird from Org
+files, I have installed a Thunderbird add-on called [[https://addons.thunderbird.net/en-US/thunderbird/addon/thunderlink/][Thunderlink]].
+
+The following code snippet adds a handler to Orgmode so that it can
+open such messages directly in Thunderbird.  I have taken it from [[https://lists.gnu.org/archive/html/emacs-orgmode/2012-12/msg00292.html][this
+mailinglist thread]].
+
+#+BEGIN_SRC emacs-lisp
+  (org-add-link-type "thunderlink" 'org-thunderlink-open)
+
+  (defun org-thunderlink-open (path)
+    "Open a specified email in Thunderbird with the help of the Thunderlink add-on."
+    (start-process "myname" nil "thunderbird" "-thunderlink" (concat "thunderlink:" path)))
+#+END_SRC
+
 * RSS reader
 The [[https://github.com/skeeto/elfeed][Elfeed]] RSS reader is an excellent choice for keeping up with
 blogs, podcasts, comics, and news sources from within Emacs.  I use it
