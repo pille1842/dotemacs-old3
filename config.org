@@ -273,7 +273,9 @@ introducing external dependencies.
   (use-package projectile
     :delight '(:eval (concat " " (projectile-project-name)))
     :config
-    (projectile-mode t))
+    (define-key projectile-mode-map (kbd "s-p") 'projectile-command-map)
+    (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)
+    (projectile-mode +1))
 #+END_SRC
 
 * Org mode
