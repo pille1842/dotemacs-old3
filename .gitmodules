@@ -1,0 +1,3 @@
+[submodule "site-lisp/org-wiki"]
+	path = site-lisp/org-wiki
+	url = git@github.com:caiorss/org-wiki.git

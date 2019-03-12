@@ -35,7 +35,7 @@ mv ~/.emacs.d{,.bak}
 Then clone this repository:
 
 #+BEGIN_SRC shell-script
-git clone https://github.com/pille1842/dotemacs ~/.emacs.d
+  git clone --recursive https://github.com/pille1842/dotemacs ~/.emacs.d
 #+END_SRC
 
 On first start, Emacs should automatically refresh its knowledge of
