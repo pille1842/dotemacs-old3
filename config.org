@@ -375,51 +375,6 @@ mailinglist thread]].
     (start-process "myname" nil "thunderbird" "-thunderlink" (concat "thunderlink:" path)))
 #+END_SRC
 
-* Org-wiki
-[[https://github.com/caiorss/org-wiki][Org-wiki]] is a org-mode extension that provides tools to manage and
-build a personal wiki or desktop wiki where each wiki page is an Org
-file.
-
-Unfortunately, it is not available as an ELPA or MELPA package.
-Therefore it's installed manually, as a [[https://git-scm.com/book/en/v2/Git-Tools-Submodules][Git submodule]], in
-=site-lisp/org-wiki/=.  This path needs to be added to the =load-path=
-variable before we can set it up.
-
-#+BEGIN_SRC emacs-lisp
-  (add-to-list 'load-path
-               (directory-file-name
-                (concat user-emacs-directory "site-lisp/org-wiki/")))
-
-  (require 'org-wiki)
-  (setq org-wiki-location-list '("~/org/wiki")
-        org-wiki-location (car org-wiki-location-list)
-        org-wiki-template (string-trim "
-  ,#+TITLE: %n
-  ,#+DESCRIPTION:
-  ,#+KEYWORDS:
-  ,#+AUTHOR: Eric Haberstroh
-  ,#+EMAIL: gpg@erixpage.de
-  ,#+DATE: %d
-  ,#+STARTUP: indent
-
-  - [[wiki:index][Index]]
-  - Verwandte Seiten:
-
-  ,* %n
-  "))
-#+END_SRC
-
-Finally let's add some keybindings.  =C-c w= is unused so it can be
-used for wiki-related functions.
-
-#+BEGIN_SRC emacs-lisp
-  (defvar org-wiki-command-prefix "C-c w"
-    "Prefix key for every org-wiki command.")
-  (global-set-key (kbd (concat org-wiki-command-prefix " i")) 'org-wiki-index)
-  (global-set-key (kbd (concat org-wiki-command-prefix " l")) 'org-wiki-insert)
-  (global-set-key (kbd (concat org-wiki-command-prefix " n")) 'org-wiki-insert-new)
-#+END_SRC
-
 * RSS reader
 The [[https://github.com/skeeto/elfeed][Elfeed]] RSS reader is an excellent choice for keeping up with
 blogs, podcasts, comics, and news sources from within Emacs.  I use it
