@@ -243,6 +243,16 @@ synced between my computers.
   (setq bookmark-default-file "~/org/bookmarks")
 #+END_SRC
 
+* Recent files
+Due to Orgmode opening a lot of files to compute the agenda, the
+default recent files list is fairly useless to me.  Since I can
+already access my Org index from the bookmarks, I don't in fact need
+the Org files in that list at all.  So let's exclude them.
+
+#+BEGIN_SRC emacs-lisp
+  (add-to-list 'recentf-exclude "/org/")
+#+END_SRC
+
 * Source control
 ** Magit
 [[https://magit.vc/][Magit]] is an interface to the version control system [[https://git-scm.com/][Git]], implemented
