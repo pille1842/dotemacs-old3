@@ -233,6 +233,16 @@ key.  This mode helps.
   (show-paren-mode t)
 #+END_SRC
 
+* Bookmarks
+By default, bookmarks are saved in a file called
+=~/.emacs.d/bookmarks=.  I want to share bookmarks between machines,
+so I'll put the bookmarks file in my =~/org= directory, which is
+synced between my computers.
+
+#+BEGIN_SRC emacs-lisp
+  (setq bookmark-default-file "~/org/bookmarks")
+#+END_SRC
+
 * Source control
 ** Magit
 [[https://magit.vc/][Magit]] is an interface to the version control system [[https://git-scm.com/][Git]], implemented
