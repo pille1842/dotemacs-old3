@@ -358,6 +358,16 @@ directory, as the [[https://orgmode.org/manual/Agenda-Files.html#Agenda-Files][m
         (list (expand-file-name "~/org")))
 #+END_SRC
 
+** Refiling
+I'd like to be able to move subtrees between all my agenda files.  For
+that purpose, let's tell Org to consider all agenda files as refile
+targets and display headings up to level 2.
+
+#+BEGIN_SRC emacs-lisp
+  (setq org-refile-targets
+        '((org-agenda-files :maxlevel . 2)))
+#+END_SRC
+
 ** Linking to Thunderbird messages
 While there are email clients for Emacs and I have tried a few
 (particularly [[https://notmuchmail.org/][notmuch]]), I simply cannot live without Thunderbird.  In
