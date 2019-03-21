@@ -348,6 +348,34 @@ I enter an Org mode file -- namely to enable =auto-fill-mode=.
   (add-hook 'org-mode-hook 'eh/setup-org-mode)
 #+END_SRC
 
+** Todo keywords and logging
+By default, Org toggles the TODO state of a task between TODO, DONE,
+and nothing.  I would like to have some additional states available:
+
+- WAIT to indicate I'm waiting for something else to happen or someone
+  else to do something in relation to the task
+- CANCEL for tasks which I do not intend to pursue further
+- DELEG for tasks which I have delegated to someone else and no longer
+  need to pay attention to
+
+When the state of a task changes, I would like to record when that
+happened in a LOGBOOK drawer (for some of these changes).  The
+following records should be made when a status is set:
+
+- WAIT: Timestamp and a short note to indicate what I'm waiting for
+- DONE: Timestamp of when the task was completed
+- CANCEL: Timestamp of when the task was cancelled
+- DELEG: Timestamp and a short note to indicate who the task was
+  delegated to
+
+Let's set these states up.
+
+#+BEGIN_SRC emacs-lisp
+  (setq org-log-into-drawer t
+        org-todo-keywords
+        '((sequence "TODO(t)" "WAIT(w@)" "|" "DONE(d!)" "CANCEL(c!)" "DELEG(e@)")))
+#+END_SRC
+
 ** Agenda
 All of my Org mode files, at least those relevant for my agenda, live
 in =~/org/=.  So the list of agenda files should contain just this
